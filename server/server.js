@@ -1,41 +1,19 @@
-require('./config/config')
+require('./config/config');
+
 const express = require('express');
+const mongoose=require('mongoose');
 const app = express();
 const body=require('body-parser');
 
 app.use(body.urlencoded({extend:false}));
-
 app.use(body.json());
+app.use(require('./rutas/usuario'));
 
-
-
-app.get('/usuario', function (req, res) {
-    res.json('get usuario');
-});
-app.post('/usuario', function (req, res) {
-    let body=req.body;
-
-    if(body.nombre===undefined)
-        res.status(400).json({
-            ok:false,
-            mensaje: 'El nombre es requerido'
-        });
+mongoose.connect(process.env.URLDB,(err,res)=>{
+    if(err)
+        throw err;
     else
-        res.json({
-            persona: body
-        });
-
-
+        console.log('conectado')
 });
-
-app.put('/usuario/:id', function (req, res) {
-    let id=req.params.id;
-    res.json({id});
-});
-
-app.delete('/usuario', function (req, res) {
-    res.json('delete usuario');
-});
-
 
 app.listen(process.env.PORT,()=>console.log('escuchando puerto'));
