@@ -3,8 +3,10 @@ const bCrypt=require('bcrypt');
 const _=require('underscore');
 const app = express();
 const Usuario= require('../modelos/usuario');
+const {verificaToken,verificaRolAdmin}=require('../middlewares/authentication');
 
-app.get('/usuario', function (req, res) {
+
+app.get('/usuario',verificaToken,(req, res)=> {
     //parametros opcionales
     let desde=req.query.desde || 0;
     desde=Number(desde);
@@ -31,7 +33,7 @@ app.get('/usuario', function (req, res) {
 
     });
 });
-app.post('/usuario', function (req, res) {
+app.post('/usuario',[verificaToken,verificaRolAdmin], function (req, res) {
     let body=req.body;
 
     let usuario=new Usuario({
@@ -56,7 +58,7 @@ app.post('/usuario', function (req, res) {
     });
 });
 
-app.put('/usuario/:id', function (req, res) {
+app.put('/usuario/:id',[verificaToken,verificaRolAdmin], function (req, res) {
     let id=req.params.id;
     //para limitar los campos que se pueden actualizar
     let body=_.pick(req.body,['nombre','email','img','role','estado']);
@@ -79,7 +81,7 @@ app.put('/usuario/:id', function (req, res) {
 
 });
 
-app.delete('/usuario/:id', function (req, res) {
+app.delete('/usuario/:id',[verificaToken,verificaRolAdmin], function (req, res) {
     let id=req.params.id;
 
     //borrado físico

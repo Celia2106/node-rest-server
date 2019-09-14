@@ -11,3 +11,10 @@ else
     urlBD='mongodb+srv://celia:lWbNcq0sh2SUm0me@cluster0-yf3ok.mongodb.net/cafe?retryWrites=true&w=majority'
 
 process.env.URLDB=urlBD;
+
+
+//expiracion token
+//60 segundos*60 minutos*24horas*30dias
+process.env.CADUCIDAD_TOKEN=60*60*24*30;
+//seed
+process.env.SEED=process.env.SEED || 'secret-dev';

@@ -7,7 +7,7 @@ const body=require('body-parser');
 
 app.use(body.urlencoded({extend:false}));
 app.use(body.json());
-app.use(require('./rutas/usuario'));
+app.use(require('./rutas/index'));
 
 mongoose.connect(process.env.URLDB,(err,res)=>{
     if(err)
