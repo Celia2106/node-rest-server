@@ -23,6 +23,7 @@ app.post('/login',(req,res)=>{
             });
         }
       if(!userDB){
+          console.log(body);
           return res.status(400).json({
               ok:false,
               err:{

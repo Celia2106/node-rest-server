@@ -16,7 +16,7 @@ mongoose.connect(process.env.URLDB,(err,res)=>{
     if(err)
         throw err;
     else
-        console.log('conectado')
+        console.log('conectado');
 });
 
 app.listen(process.env.PORT,()=>console.log('escuchando puerto'));

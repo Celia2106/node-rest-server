@@ -2,9 +2,10 @@ const jwt=require('jsonwebtoken');
 
 let verificaToken=(req,res,next)=>{
     let token=req.body.token;
-
+    console.log(req.body);
     jwt.verify(token,process.env.SEED,(err,infoDecoded)=>{
         if(err){
+            console.log(err);
             return res.status(401).json({
                 ok:false,
                 err:{
@@ -20,6 +21,7 @@ let verificaToken=(req,res,next)=>{
 
 let verificaRolAdmin=(req,res,next)=>{
     let usuario=req.usuario;
+    console.log(usuario);
     if(usuario.role==='ADMIN_ROLE')
         next();
     else
