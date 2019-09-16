@@ -2,7 +2,7 @@ const jwt=require('jsonwebtoken');
 
 let verificaToken=(req,res,next)=>{
     let token=req.body.token;
-    console.log(req.body);
+
     jwt.verify(token,process.env.SEED,(err,infoDecoded)=>{
         if(err){
             console.log(err);
@@ -31,9 +31,25 @@ let verificaRolAdmin=(req,res,next)=>{
                 message:'No tiene permisos'
             }
         });
+};
+let verificaTokenImg=(req,res,next)=>{
+    let token=req.query.token;
 
+
+    jwt.verify(token,process.env.SEED,(err,infoDecoded)=>{
+        if(err){
+            console.log(err);
+            return res.status(401).json({
+                ok:false,
+                err:{
+                    message:'Token no valido'
+                }
+            });
+        }
+        req.usuario=infoDecoded.usuario;
+        next();
+    });
 
 
 };
-
-module.exports={verificaToken,verificaRolAdmin};
+module.exports={verificaToken,verificaRolAdmin,verificaTokenImg};
